@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+html,
+body {
+	@apply bg-gray-50 text-gray-800;
+}
+
+/* Encabezado */
+.header {
+	@apply bg-white border-b px-6 py-4 flex justify-between items-center;
+}
+
+.header-container {
+	@apply flex items-center gap-4;
+}
+
+.header-contenedor {
+	@pply w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold;
+}
+
