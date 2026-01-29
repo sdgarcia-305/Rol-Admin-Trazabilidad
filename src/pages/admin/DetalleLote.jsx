@@ -61,7 +61,7 @@ export default function DetalleLote({ lote }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl mb-2">Detalle del Lote</h1>
+          <h1 className="text-3xl font-semibold mb-2">Detalle del Lote</h1>
           <p className="text-muted-foreground">Lote {lote.id}</p>
         </div>
 
