@@ -6,43 +6,35 @@ import { useForm } from "react-hook-form";
 import api from "../../services/api"; 
 
 export default function AgregarUsuario() {
+  const [currentView, setCurrentView] = useState(null);
   const [step, setStep] = useState(1);
   const [permisos, setPermisos] = useState([]);
 
-  const {
-    register,
-    watch,
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    defaultValues: {
-      telefonos: [""],
-    },
-  });
+const {
+        register,
+        watch,
+        control,
+        formState: { errors },
+        handleSubmit
+    } = useForm({
+        defaultValues: {
+            telefonos: ['']
+        }
+    });
+    useEffect(() => {
+        const getPermisos = async () => {
+            const res = await api.get('/permisos/all')
+            let data = res.data['data'];
+            setPermisos(data);
+        }
+        getPermisos()
 
-  useEffect(() => {
-    const getPermisos = async () => {
-      try {
-        const res = await api.get("/permisos/all");
-        setPermisos(res.data?.data ?? []);
-      } catch (error) {
-        console.error("Error al obtener permisos", error);
-      }
-    };
+    }, []);
 
-    getPermisos();
-  }, []);
-
-  const submit = handleSubmit(async (data) => {
-    try {
-      const res = await api.post("/users", data);
-      console.log("Usuario creado:", res.data);
-      // aquí puedes redirigir o mostrar toast
-    } catch (error) {
-      console.error("Error al crear usuario", error);
-    }
-  });
+    const submit = handleSubmit(async (data) => {
+        const res = await api.post('/users', data);
+        console.log(res);
+    })
 
   return (
     <div className="flex-1 overflow-auto py-20 pb-4">

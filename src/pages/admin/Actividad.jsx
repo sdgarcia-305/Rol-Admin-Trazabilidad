@@ -28,6 +28,20 @@ export default function Actividad() {
         modulo: "Producción",
         tiempo: "Hace 1 hora",
       },
+      {
+        id: 4,
+        usuario: "Karla Cisneros",
+        accion: "Asignó ruta a transportista",
+        modulo: "Rutas",
+        tiempo: "Hace 20 minutos",
+      },
+      {
+        id: 5,
+        usuario: "Iván García",
+        accion: "Actualizó estado de lote",
+        modulo: "Producción",
+        tiempo: "Hace 1 hora",
+      },
     ]);
   }, []);
 
@@ -43,23 +57,23 @@ export default function Actividad() {
         </div>
 
         {/* LISTA */}
-        <div className="bg-card rounded-xl shadow border divide-y">
+        <div className="bg-card rounded-xl shadow">
           {actividades.map((a) => (
             <div
               key={a.id}
-              className="p-4 flex items-start gap-4 hover:bg-muted transition"
+              className="p-4 flex items-start gap-6 hover:bg-muted transition"
             >
               <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
                 <Activity className="text-green-600" />
               </div>
 
               <div className="flex-1">
-                <p className="font-medium flex items-center gap-2">
+                <p className="font-medium flex items-center gap-4">
                   <User className="size-4" />
                   {a.usuario}
                 </p>
-                <p className="text-sm text-muted-foreground">{a.accion}</p>
-                <div className="flex items-center gap-3 mt-1">
+                <p className="text-sm text-muted-foreground pt-1">{a.accion}</p>
+                <div className="flex items-center pt-1 gap-3 mt-1">
                   <Badge variant="outline">{a.modulo}</Badge>
                   <span className="text-xs text-gray-400 flex items-center gap-1">
                     <Clock className="size-3" />

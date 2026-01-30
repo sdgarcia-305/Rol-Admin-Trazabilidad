@@ -23,6 +23,20 @@ export default function Rutas() {
         lote: "Lote #18",
         estado: "Pendiente",
       },
+      {
+        id: 3,
+        nombre: "Ruta La Libertad",
+        transportista: "Juan Perez",
+        lote: "Lote #12",
+        estado: "En tránsito",
+      },
+      {
+        id: 4,
+        nombre: "Ruta San Vicente",
+        transportista: "Sin asignar",
+        lote: "Lote #18",
+        estado: "Pendiente",
+      },
     ]);
   }, []);
 
@@ -38,29 +52,33 @@ export default function Rutas() {
         </div>
 
         {/* TABLA */}
-        <div className="bg-card rounded-xl shadow border">
-          <table className="w-full text-sm hidden md:table">
+        <div className="w-full bg-card border rounded-xl shadow">
+          {/* ===================== */}
+          {/* TABLA (Desktop / Tablet) */}
+          {/* ===================== */}
+          <table className="w-full border-collapse text-sm hidden md:table">
             <thead className="bg-muted">
               <tr>
                 <th className="px-4 py-3 text-left">Ruta</th>
                 <th className="px-4 py-3 text-left">Transportista</th>
                 <th className="px-4 py-3 text-left">Lote</th>
-                <th className="px-4 py-3 text-left">Estado</th>
+                <th className="px-6 py-3 text-left">Estado</th>
                 <th className="px-4 py-3 text-center">Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               {rutas.map((r) => (
                 <tr key={r.id} className="border-t hover:bg-muted/50">
-                  <td className="px-4 py-3 font-medium flex items-center gap-2">
-                    <MapPin className="size-4 text-green-600" />
-                    {r.nombre}
+                  <td className="px-4 py-3 font-medium">
+                   {r.nombre}
+                    <span></span>
                   </td>
                   <td className="px-4 py-3 flex items-center gap-2">
                     <User className="size-4" />
                     {r.transportista}
                   </td>
-                  <td className="px-4 py-3">{r.lote}</td>
+                  <td className="px-2 py-3">{r.lote}</td>
                   <td className="px-4 py-3">
                     <Badge
                       className={
@@ -93,7 +111,11 @@ export default function Rutas() {
                 <p className="text-sm text-muted-foreground">
                   Transportista: {r.transportista}
                 </p>
-                <Badge className="bg-green-100 text-green-800">
+                <Badge className={
+                  r.estado === "En tránsito"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-yellow-100 text-yellow-800"
+                }>
                   {r.estado}
                 </Badge>
                 <Button className="w-full mt-2 bg-green-600 text-white">

@@ -59,7 +59,7 @@ export const CreateUser2 = ({
               {fields.map((field, index) => (
                 <div key={field.id} className="flex items-center gap-2">
                   <input
-                    className="w-full p-2.5 rounded-lg bg-slate-700 border border-slate-600 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="w-full p-2.5 rounded-lg border border-slate-600 text-black placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     type="tel"
                     {...register(`telefonos.${index}`, {
                       required: "El teléfono es obligatorio",
