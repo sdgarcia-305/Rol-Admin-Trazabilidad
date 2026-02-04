@@ -4,7 +4,7 @@ export default function BottomNav({ menuItems, currentView, setCurrentView }) {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
-      <div className="grid grid-cols-6 gap-0">
+      <div className="grid grid-cols-8 gap-0">
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive = currentView === item.id;

@@ -12,29 +12,38 @@ const useUsuariosStore = create((set, get) => ({
   /* OBTENER USUARIOS */
   /* ===================== */
   fetchUsuarios: async () => {
-    try {
-      set({ loading: true, error: null });
+  try {
+    set({ loading: true, error: null });
 
-      const res = await api.get("/users");
+    const firstRes = await api.get("/users?page=1");
 
+    const meta = firstRes.data;
+    const lastPage = meta.last_page || 1;
 
-      const usuarios = res.data.data.map((u) => ({
-        id: u.id,
-        nombre: `${u.persona?.nombres ?? ""} ${u.persona?.apellidos ?? ""}`,
-        email: u.email,
-        rol: u.role ?? "Agricultor", // valor por defecto
-        estado: u.active ? "activo" : "inactivo",
-      }));
+    let allUsers = [...(meta.data || [])];
 
-      set({ usuarios, loading: false });
-    } catch (error) {
-      console.error(error);
-      set({
-        error: "Error al cargar usuarios",
-        loading: false,
-      });
+    for (let page = 2; page <= lastPage; page++) {
+      const res = await api.get(`/users?page=${page}`);
+      allUsers = [...allUsers, ...(res.data.data || [])];
     }
-  },
+
+    const usuarios = allUsers.map((u) => ({
+      id: u.id,
+      nombre: `${u.persona?.nombres ?? ""} ${u.persona?.apellidos ?? ""}`.trim(),
+      email: u.email,
+      rol: u.role ?? "Agricultor",
+      estado: u.active ? "activo" : "inactivo",
+    }));
+
+    set({ usuarios, loading: false });
+  } catch (error) {
+    console.error(error);
+    set({
+      error: "Error al cargar usuarios",
+      loading: false,
+    });
+  }
+}, 
 
   /* ===================== */
   /* ELIMINAR USUARIO */

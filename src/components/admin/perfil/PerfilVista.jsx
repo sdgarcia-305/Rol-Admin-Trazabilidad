@@ -1,21 +1,34 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "../../ui/button";
+import { ArrowLeft } from "lucide-react";
 
-export const PerfilVista = ({ user, refreshPhoto, setEdit }) => {
-
+export const PerfilVista = ({ user, refreshPhoto, setEdit, setCurrentView }) => {
 
   return (
     <main className="flex-1 overflow-auto py-20">
       <div className="p-4 sm:p-6 lg:p-8">
         <div className="space-y-6">
           {/* Header */}
-          <div>
-            <h1 className="text-3xl font-semibold mb-2">
-              Perfil de Usuario
-            </h1>
-            <p className="text-muted-foreground">
-              Información personal, roles y datos de contacto.
-            </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-semibold mb-2">
+                Perfil de Usuario
+              </h1>
+              <p className="text-muted-foreground mr-6">
+                Información personal, roles y datos de contacto.
+              </p>
+            </div>
+            <Button onClick={() => setCurrentView("usuarios")} className="flex items-center gap-2
+              text-white bg-green-600 hover:bg-green-700
+              px-3 sm:px-4
+              whitespace-nowrap"
+            >
+              <ArrowLeft className="size-4" />
+                <span className="hidden sm:inline">
+                  Regresar
+                </span>
+            </Button>
           </div>
 
           {/* Card principal */}
@@ -26,7 +39,7 @@ export const PerfilVista = ({ user, refreshPhoto, setEdit }) => {
               <img
                 src={`https://pavelbacktrazabilidad.qzz.io/api/v1/auth/foto-perfil/${user.id}?r=${refreshPhoto}`}
                 alt="Profile"
-                className="w-40 h-40 rounded-full mx-auto mb-4 object-cover border"
+                className="w-40 h-40 rounded-full text-white mx-auto mb-4 object-cover border"
               />
 
               <h2 className="text-xl text-white font-semibold">
@@ -40,7 +53,7 @@ export const PerfilVista = ({ user, refreshPhoto, setEdit }) => {
               <button
                 type="button"
                 onClick={() => setEdit(true)}
-                className="mt-4 w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
+                className="mt-4 w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
               >
                 Editar perfil
               </button>

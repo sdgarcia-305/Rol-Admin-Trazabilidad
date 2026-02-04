@@ -4,7 +4,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { PerfilVista } from "./PerfilVista";
 import { PerfilEdit } from "./PerfilEdit";
 
-export default function Perfil() {
+export default function Perfil( {setCurrentView} ) {
   const user = useProfileStore((s) => s.user);
   const updatePhoto = useProfileStore((s) => s.updatePhoto);
   const updateUser = useProfileStore((s) => s.updateUser);
@@ -44,6 +44,7 @@ export default function Perfil() {
             user={user}
             setEdit={setEdit}
             refreshPhoto={refreshPhoto}
+            setCurrentView={setCurrentView}
           />
         ) : (
           <PerfilEdit

@@ -19,10 +19,7 @@ export const useDashboardStore = create((set) => ({
 
   cargarDashboard: async () => {
     try {
-      const [lotesRes, usersRes] = await Promise.all([
-        api.get("/lotes"),
-        api.get("/users?page=1"),
-      ]);
+      const lotesRes = await api.get("/lotes");
 
       // ================= LOTES =================
       const lotes = lotesRes.data.data || [];
@@ -116,18 +113,28 @@ export const useDashboardStore = create((set) => ({
         responsable:
           `${l.persona?.nombres ?? ""} ${l.persona.apellidos ?? ""}`.trim(),
         lote: `ID ${l.id}`,
-        tiempo: "Reciente",
       }));
 
-      const users = usersRes.data.data || [];
-      const usuariosRecientes = users.slice(0, 4);
+      // ================= USUARIOS =================
+      const firstRes = await api.get("/users?page=1");
+      const lastPage = firstRes.data.last_page || 1;
 
-      const actividadesUsuarios = users.slice(0, 2).map((u) => ({
+      const lastRes = await api.get(`/users?page=${lastPage}`);
+      let users = lastRes.data.data || [];
+
+      if (users.length < 4 && lastPage > 1) {
+        const prevRes = await api.get(`/users?page=${lastPage - 1}`);
+        users = [...users, ...(prevRes.data.data || [])];
+      }
+
+      const usuariosRecientes = users
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 4);
+
+      const actividadesUsuarios = usuariosRecientes.slice(0, 2).map((u) => ({
         tipo: "rol",
         descripcion: "Nuevo usuario registrado",
-        responsable:
-          `${u.persona?.nombres ?? ""} ${u.persona?.apellidos ?? ""}`.trim(),
-        tiempo: "Hace poco",
+        responsable: `${u.persona?.nombres ?? ""} ${u.persona?.apellidos ?? ""}`.trim(),
       }));
 
       set({

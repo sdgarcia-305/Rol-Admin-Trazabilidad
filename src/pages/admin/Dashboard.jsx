@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Home, Package, Users, BarChart, Activity, Settings, Van } from "lucide-react";
+import { Home, Package, Users, BarChart, Activity, Settings, Van, Store, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 import DashboardAdmin from "../../components/admin/dashboard/DashboardAdmin";
@@ -11,10 +12,19 @@ import Rutas from "./Rutas";
 import Usuarios from "../../pages/admin/Usuarios";
 import Perfil from "../../components/admin/perfil/Perfil";
 import AgregarUsuario from "./AgregarUsuario";
+import Logout from "../../pages/admin/Logout";
 
 export default function Dashboard() {
   const [currentView, setCurrentView] = useState("dashboard");
   const [selectedLote, setSelectedLote] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+
+    navigate("/login", { replace: true });
+  };
 
   const menuItems = [
     { id: "dashboard", label: "Inicio", icon: Home },
@@ -22,7 +32,9 @@ export default function Dashboard() {
     { id: "usuarios", label: "Usuarios", icon: Users },
     { id: "rutas", label: "Rutas", icon: Van },
     { id: "actividad", label: "Actividad", icon: Activity },
+    { id: "establecimientos", label: "Puntos de Venta", icon: Store },
     { id: "ajustes", label: "Ajustes", icon: Settings },
+    { id: "cerar-sesion", label: "Cerrar sesión", icon: LogOut },
   ];
 
   const renderView = () => {
@@ -35,7 +47,7 @@ export default function Dashboard() {
           setCurrentView("agregar-usuario")}
           setCurrentView={setCurrentView}/>;
       case "perfil":
-        return <Perfil />
+        return <Perfil setCurrentView={setCurrentView} />
       case "agregar-usuario":
         return <AgregarUsuario />
       case "lotes":
@@ -43,11 +55,14 @@ export default function Dashboard() {
           setSelectedLote(lote);
           setCurrentView("detalle-lote"); }}/>; 
       case "detalle-lote":
-        return <DetalleLote lote={selectedLote} />;
+        return <DetalleLote lote={selectedLote}
+          onRegresar={() => setCurrentView("lotes")} />;
       case "rutas":
         return <Rutas />;
       case "actividad":
         return <Actividad />;
+      case "cerrar-sesion":
+        return <Logout />;
       case "ajustes":
         return <Configuracion />;
       default:
@@ -60,6 +75,7 @@ export default function Dashboard() {
       menuItems={menuItems}
       currentView={currentView}
       setCurrentView={setCurrentView}
+      onLogout={handleLogout}
     >
       {renderView()}
       
