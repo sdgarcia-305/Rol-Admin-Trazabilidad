@@ -39,7 +39,7 @@ export const PerfilEdit = ({
                 />
 
                 <div className="mb-4">
-                  <FileInput register={register} />
+                  <FileInput register={register} /> 
                 </div>
 
                 <div className="space-y-4">

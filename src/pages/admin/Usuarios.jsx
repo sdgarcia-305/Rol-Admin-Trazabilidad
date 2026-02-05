@@ -8,6 +8,11 @@ import useUsuariosStore from "../../store/userStore";
 export default function Usuarios({ onNuevoUsuario, setCurrentView }) {
   const [search, setSearch] = useState("");
   const [usuariosFiltrados, setUsuariosFiltrados] = useState([]);
+  const normalizarTexto = (texto) => texto
+    .toString()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 
   const {
     usuarios,
@@ -17,7 +22,7 @@ export default function Usuarios({ onNuevoUsuario, setCurrentView }) {
     deleteUsuario,
     toggleEstado,
     changeRol,
-  } = useUsuariosStore();
+  } = useUsuariosStore(); 
 
   useEffect(() => {
     fetchUsuarios();
@@ -28,24 +33,24 @@ export default function Usuarios({ onNuevoUsuario, setCurrentView }) {
   }, [usuarios]);
 
   const handleFiltrar = () => {
-    if (!search.trim()) {
-      setUsuariosFiltrados(usuarios);
-      return;
-    }
+  const filtroNormalizado = normalizarTexto(search.trim());
 
-    const filtro = search.toLowerCase();
+  if (!filtroNormalizado) {
+    setUsuariosFiltrados(usuarios);
+    return;
+  }
 
-    const resultado = usuarios.filter(
-      (u) =>
-        u.nombre.toLowerCase().includes(filtro) ||
-        u.email.toLowerCase().includes(filtro),
-    );
+  const resultado = usuarios.filter((u) =>
+    normalizarTexto(u.nombre).includes(filtroNormalizado) ||
+    normalizarTexto(u.email).includes(filtroNormalizado)
+  );
 
-    setUsuariosFiltrados(resultado);
-  };
+  setUsuariosFiltrados(resultado);
+};
+
 
   return (
-    <div className="flex-1 overflow-auto py-20 pb-4">
+    <div className="flex-1 overflow-auto py-20 pb-10">
       <div className="p-4 sm:p-6 lg:p-8">
         <div className="space-y-6">
           {/* Header */}

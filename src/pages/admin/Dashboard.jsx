@@ -12,7 +12,6 @@ import Rutas from "./Rutas";
 import Usuarios from "../../pages/admin/Usuarios";
 import Perfil from "../../components/admin/perfil/Perfil";
 import AgregarUsuario from "./AgregarUsuario";
-import Logout from "../../pages/admin/Logout";
 
 export default function Dashboard() {
   const [currentView, setCurrentView] = useState("dashboard");
@@ -34,7 +33,7 @@ export default function Dashboard() {
     { id: "actividad", label: "Actividad", icon: Activity },
     { id: "establecimientos", label: "Puntos de Venta", icon: Store },
     { id: "ajustes", label: "Ajustes", icon: Settings },
-    { id: "cerar-sesion", label: "Cerrar sesión", icon: LogOut },
+    { id: "cerrar-sesion", label: "Cerrar sesión", icon: LogOut },
   ];
 
   const renderView = () => {
@@ -61,8 +60,6 @@ export default function Dashboard() {
         return <Rutas />;
       case "actividad":
         return <Actividad />;
-      case "cerrar-sesion":
-        return <Logout />;
       case "ajustes":
         return <Configuracion />;
       default:

@@ -1,4 +1,4 @@
-export const FileInput = ({ register }) => {
+export const FileInput = ({ register }) => { 
 
     return (<>
 

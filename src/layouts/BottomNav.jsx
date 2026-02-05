@@ -1,4 +1,4 @@
-export default function BottomNav({ menuItems, currentView, setCurrentView }) {
+export default function BottomNav({ menuItems, currentView, setCurrentView, onLogout }) {
 
   if (!Array.isArray(menuItems)) return null;
 
@@ -12,7 +12,13 @@ export default function BottomNav({ menuItems, currentView, setCurrentView }) {
           return (
             <button
               key={item.id}
-              onClick={() => setCurrentView(item.id)}
+              onClick={() => {
+                if (item.id === "cerrar-sesion") {
+                  onLogout();
+                } else {
+                  setCurrentView(item.id);
+                }
+              }}
               className={`flex flex-col items-center justify-center py-2 px-1 transition-colors
                 ${
                   isActive

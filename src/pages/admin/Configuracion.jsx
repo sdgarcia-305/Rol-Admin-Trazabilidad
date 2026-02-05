@@ -4,7 +4,7 @@ import { Button } from "../../components/ui/button";
 import { User, Shield, LogOut, Camera, } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function Configuracion() {
+export default function Configuracion({ register }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {

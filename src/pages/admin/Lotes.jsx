@@ -8,6 +8,11 @@ import { Calendar, MapPin, Eye, Edit, Trash2, Search } from "lucide-react";
 export default function Lotes({onVerLote}) {
   const [search, setSearch] = useState("");
   const [filtro, setFiltro] = useState("");
+  const normalizarTexto = (texto) => texto
+    .toString()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 
   const lotes = [
     {
@@ -78,12 +83,15 @@ export default function Lotes({onVerLote}) {
     }
   ];
 
-  const lotesFiltrados = lotes.filter(
-    (lote) =>
-      lote.cultivo.toLowerCase().includes(filtro.toLowerCase()) ||
-      lote.estado.toLowerCase().includes(filtro.toLowerCase()) ||
-      lote.id.toLowerCase().includes(filtro.toLowerCase()),
-  );
+  const lotesFiltrados = lotes.filter((lote) => {
+  const filtroNormalizado = normalizarTexto(filtro);
+
+    return (
+      normalizarTexto(lote.cultivo).includes(filtroNormalizado) ||
+      normalizarTexto(lote.estado).includes(filtroNormalizado) ||
+      normalizarTexto(lote.id).includes(filtroNormalizado)
+    );
+  });
 
   const handleFiltrar = () => {
     setFiltro(search.trim());

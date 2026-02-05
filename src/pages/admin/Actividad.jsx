@@ -50,7 +50,7 @@ export default function Actividad() {
       <div className="p-4 sm:p-6 lg:p-8 space-y-6">
         {/* HEADER */}
         <div>
-          <h1 className="text-3xl font-semibold mb-1">Actividad del Sistema</h1>
+          <h1 className="text-3xl font-semibold mb-2">Actividad del Sistema</h1>
           <p className="text-muted-foreground">
             Registro de acciones recientes realizadas por los usuarios
           </p>
